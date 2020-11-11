@@ -1,7 +1,5 @@
-# Purpose of this software
-This software is meant to be flashed on an esp8266, connected with an RGB LED strip and a White LED strip.
-It is able to drive all colors of the strip from 0 to 100% dimmable via multichannel
-pwm. Warning : White LED Strip command is inverted ! (N-Channel MOSFET used)
+# Smoke, dust and air quality 
+This sensor is based on [this module](https://www.amazon.fr/gp/product/B07P94LCFZ/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1), which is capable of mesuring PM25 density in µg / m3. You have to connect IRLED to GPIO 13 and AOUT to ADC Input. Home App return the air quality which is calculated with the PM25 density.
 
 ## Homekit integration
 No bridge is required. Instead, this project uses the esp-homekit implementation found
@@ -27,10 +25,8 @@ vi wifi.h
 6. Clone this project into the examples subfolder and copy config.h.sample -> config.h. Set correct config options afterwards:
 ```shell
 cd examples
-git clone https://github.com/EG-Julien/esp8266-rgb-w-led-strip.git
-cd esp8266-rgb-w-led-strip
-cp config.h.sample config.h
-vi config.h
+git clone https://github.com/EG-Julien/esp8266-dust-sensor.git
+cd esp8266-dust-sensor
 ```
 7. Configure settings:
     1. If you use ESP8266 with 4MB of flash (32m bit), then you're fine. If you have
@@ -50,7 +46,7 @@ vi config.h
     (see issue #80)
 8. Build:
 ```shell
-cd esp-homekit-demo/examples/esp8266-rgb-w-led-strip
+cd esp-homekit-demo/examples/esp8266-dust-sensor
 make -C . all
 ```
 9. Set ESPPORT environment variable pointing to USB device your ESP8266 is attached
@@ -61,32 +57,28 @@ export ESPPORT=/dev/tty.SLAB_USBtoUART
 10. To prevent any effects from previous firmware (e.g. firmware crashing right at
    start), highly recommend to erase flash:
 ```shell
-    cd esp-homekit-demo/examples/esp8266-rgb-w-led-strip
+    cd esp-homekit-demo/examples/esp8266-dust-sensor
     make -C . erase_flash
 ```
 11. Upload firmware to ESP:
 ```shell
-    cd esp-homekit-demo/examples/esp8266-rgb-w-led-strip
+    cd esp-homekit-demo/examples/esp8266-dust-sensor
     make -C . test
 ```
   or
 ```shell
-    cd esp-homekit-demo/examples/esp8266-rgb-w-led-strip
+    cd esp-homekit-demo/examples/esp8266-dust-sensor
     make -C flash
     make -C monitor
 ```
-  or
-```shell
-    cd esp-homekit-demo/examples/esp8266-rgb-w-led-strip
-    ./build.sh
-```
+
 12. Open Home app on your device, and click '+'. If Home does not recognize the ESP8266,
 proceed to adding device anyways by entering code.
 
 # Troubleshooting
 Try to monitor the ESP8266 while it's executing the software:
 ```shell
-    cd esp-homekit-demo/examples/esp8266-rgb-w-led-strip
+    cd esp-homekit-demo/examples/esp8266-dust-sensor
     make -C . monitor
 ```
 It is often also a good idea to reset the ESP (cutoff power).
